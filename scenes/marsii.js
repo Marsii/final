@@ -1,6 +1,11 @@
 class marsii extends Scene {
-
-
+/*
+    constructor() {
+		super();
+		sceneManager['goodend'] = new Scene("GoodEnd");
+        sceneManager['badend'] = new Scene("EvilEnd");
+	}
+*/    
     preload() {
 
         //Main character - Astronaut
@@ -52,7 +57,8 @@ class marsii extends Scene {
         //NPC
 
         this.staticAlienNorm = loadSpriteSheet('images/marsii/npcs/staticAlien.png', 64, 128, 8);
-
+        this.staticAlienQC = loadSpriteSheet('images/marsii/npcs/staticAlienqc.png', 64, 128, 8);
+        this.staticAlienBad = loadSpriteSheet('images/marsii/npcs/staticAlienbqc.png', 64, 128, 8);
         this.staticAlienSheet = this.staticAlienNorm
 
         this.staticAlien = new NPC(400, -600, this.staticAlienSheet, "Hi. you need me for energy.");
@@ -61,7 +67,6 @@ class marsii extends Scene {
 
         this.cosmicAlienNorm = loadSpriteSheet('images/marsii/npcs/cosmicAlien.png', 64, 130, 6);
         this.cosmicAlienQC = loadSpriteSheet('images/marsii/npcs/cosmicAlienqc.png', 64, 130, 6);
-
         this.cosmicAlienSheet = this.cosmicAlienNorm;
 
         this.cosmicAlien = new NPC(-2700, -570, this.cosmicAlienSheet, "Hi. you need me for my power.");
@@ -141,9 +146,22 @@ class marsii extends Scene {
             walkup: loadAnimation(this.walkup),
             walkdown: loadAnimation(this.walkdown),
             idle: loadAnimation(this.idle)
-
+            
+            
+            //CosmicNorm: loadAnimation(this.cosmicAlienNorm),
+            //CosmicQC: loadAnimation(this.cosmicAlienQC),
 
         };
+        /*
+        		var npcAnimations = {
+			idle: this.npcSpriteSheet,
+             attack: this.npcattackSheet,
+             samattack:this.samattackSheet,
+             ellaattack:this.ellaattackSheet,
+             joeattack:this.joeattackSheet
+            
+		};*/
+		this.npc = new Character(npcAnimations, width - 200, height/2);
 
         this.character = new Character(animations);
         this.character.changeAnimation('idle');
@@ -218,7 +236,6 @@ class marsii extends Scene {
         this.shipRepaired = false;
         this.gooddevice = false;
         this.baddevice = false;
-	this.shipFixed = false;
 
         // Needed for Static Alien
         this.emptyBattery = false;
@@ -227,11 +244,13 @@ class marsii extends Scene {
         // Needed from Static Alien
         this.partBattery = false;
         this.fullBattery = false;
-
+        
+        
         this.staticAlienQC = loadSpriteSheet('images/marsii/npcs/staticAlienqc.png', 64, 128, 8);
         this.staticAlienBQC = loadSpriteSheet('images/marsii/npcs/staticAlienbqc.png', 64, 128, 4);
-        this.staticAlienSheet = this.staticAlienNorm
+        this.staticAlienSheet = this.staticAlienNorm;
         
+        this.startcounter = false;
         this.fixcounter = 0;
         this.savedTime = millis();
         this.totalTime = 1000;      
@@ -794,6 +813,7 @@ class marsii extends Scene {
                 dialog = "Alright, I'll start fixing your ship"
                 // Position needs to change to near ship.
             } else if (this.plantAlien.dialogCount == 15.5) {
+                this.startcounter = true;
                 this.plantAlien.dialogCount = 17;
             }
 
@@ -821,14 +841,19 @@ class marsii extends Scene {
                 this.plantAlien.dialogCount = 17;
             }
             
+            
+            
+            
+            
+            /*
+            if (this.startcounter = true){
             var passedTime = millis() - this.savedTime;
             if (passedTime > this.totalTime) {
-            fixcounter++;
+            counter++;
             this.savedTime = millis(); // Save the current time to restart the timer!
-            } else if (passedTime <= this.totalTime){
-                this.shipFixed = true;
             }
-            
+            }
+            */
 
 
             text(dialog, this.plantAlien.x - 30, this.plantAlien.y - 100, 250, 200);
