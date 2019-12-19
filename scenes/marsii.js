@@ -218,6 +218,7 @@ class marsii extends Scene {
         this.shipRepaired = false;
         this.gooddevice = false;
         this.baddevice = false;
+	this.shipFixed = false;
 
         // Needed for Static Alien
         this.emptyBattery = false;
@@ -822,8 +823,10 @@ class marsii extends Scene {
             
             var passedTime = millis() - this.savedTime;
             if (passedTime > this.totalTime) {
-            counter++;
+            fixcounter++;
             this.savedTime = millis(); // Save the current time to restart the timer!
+            } else if (passedTime <= this.totalTime){
+                this.shipFixed = true;
             }
             
 
